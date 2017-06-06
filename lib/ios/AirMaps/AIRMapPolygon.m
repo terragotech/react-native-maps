@@ -83,6 +83,15 @@
     }
 }
 
+- (void)setZIndex:(CGFloat)zIndex {
+    _zIndex = zIndex;
+    [self update];
+}
+
+- (CGFloat) getZIndex {
+    return _zIndex;
+}
+
 - (void) update
 {
     if (!_renderer) return;
@@ -97,7 +106,7 @@
 
     if (_map == nil) return;
     [_map removeOverlay:self];
-    [_map addOverlay:self];
+    [_map addOverlayRespectingZIndex:self];
 }
 
 #pragma mark MKOverlay implementation

@@ -18,6 +18,10 @@ extern const CLLocationDegrees AIRMapDefaultSpan;
 extern const NSTimeInterval AIRMapRegionChangeObserveInterval;
 extern const CGFloat AIRMapZoomBoundBuffer;
 
+@protocol AIRZIndexed
+-(CGFloat) getZIndex;
+@end
+
 @interface AIRMap: MKMapView<SMCalloutViewDelegate>
 
 @property (nonatomic, strong) SMCalloutView *calloutView;
@@ -60,5 +64,6 @@ extern const CGFloat AIRMapZoomBoundBuffer;
 - (void)cacheViewIfNeeded;
 - (void)beginLoading;
 - (void)finishLoading;
+- (void)addOverlayRespectingZIndex:(id <MKOverlay>)overlay;
 
 @end

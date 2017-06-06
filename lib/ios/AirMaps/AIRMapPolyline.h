@@ -32,6 +32,7 @@
 @property (nonatomic, assign) CGFloat lineDashPhase;
 @property (nonatomic, strong) NSArray <NSNumber *> *lineDashPattern;
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
+@property (nonatomic, assign) BOOL geodesic;
 
 #pragma mark MKOverlay protocol
 

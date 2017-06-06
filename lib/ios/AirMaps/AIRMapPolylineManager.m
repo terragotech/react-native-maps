@@ -42,5 +42,6 @@ RCT_EXPORT_VIEW_PROPERTY(miterLimit, CGFloat)
 RCT_EXPORT_VIEW_PROPERTY(lineDashPhase, CGFloat)
 RCT_EXPORT_VIEW_PROPERTY(lineDashPattern, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(geodesic, BOOL)
 
 @end

@@ -16,7 +16,7 @@
 #import "AIRMap.h"
 #import "RCTConvert+AirMap.h"
 
-@interface AIRMapUrlTile : MKAnnotationView <MKOverlay>
+@interface AIRMapUrlTile : MKAnnotationView <MKOverlay,AIRZIndexed>
 
 @property (nonatomic, weak) AIRMap *map;
 
@@ -24,6 +24,7 @@
 @property (nonatomic, strong) MKTileOverlayRenderer *renderer;
 
 @property (nonatomic, copy) NSString *urlTemplate;
+@property (nonatomic, assign) CGFloat zIndex;
 
 #pragma mark MKOverlay protocol
 

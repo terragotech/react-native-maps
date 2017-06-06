@@ -13,6 +13,13 @@
     BOOL _urlTemplateSet;
 }
 
+- (void)setZIndex:(CGFloat)zIndex {
+    _zIndex = zIndex;
+    [self update];
+}
+- (CGFloat) getZIndex {
+    return _zIndex;
+}
 
 - (void)setUrlTemplate:(NSString *)urlTemplate{
     _urlTemplate = urlTemplate;
@@ -35,7 +42,7 @@
     
     if (_map == nil) return;
     [_map removeOverlay:self];
-    [_map addOverlay:self level:MKOverlayLevelAboveLabels];
+    [_map addOverlayRespectingZIndex:self];
 }
 
 #pragma mark MKOverlay implementation

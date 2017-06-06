@@ -97,15 +97,15 @@ const CGFloat AIRMapZoomBoundBuffer = 0.01;
         [self addAnnotation:(id <MKAnnotation>) subview];
     } else if ([subview isKindOfClass:[AIRMapPolyline class]]) {
         ((AIRMapPolyline *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview];
+         [self addOverlayRespectingZIndex:(id<MKOverlay>)subview];
     } else if ([subview isKindOfClass:[AIRMapPolygon class]]) {
         ((AIRMapPolygon *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview];
+        [self addOverlayRespectingZIndex:(id<MKOverlay>)subview];
     } else if ([subview isKindOfClass:[AIRMapCircle class]]) {
-        [self addOverlay:(id<MKOverlay>)subview];
+        [self addOverlayRespectingZIndex:(id<MKOverlay>)subview];
     } else if ([subview isKindOfClass:[AIRMapUrlTile class]]) {
         ((AIRMapUrlTile *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview];
+       [self addOverlayRespectingZIndex:(id<MKOverlay>)subview];
     } else {
         NSArray<id<RCTComponent>> *childSubviews = [subview reactSubviews];
         for (int i = 0; i < childSubviews.count; i++) {
@@ -147,6 +147,38 @@ const CGFloat AIRMapZoomBoundBuffer = 0.01;
   return _reactSubviews;
 }
 #pragma clang diagnostic pop
+
+- (void)addOverlayRespectingZIndex:(id <MKOverlay>)overlay {
+    // This will add an overlay but order it according to the zIndex
+    // Values less than 0 will be added to the MKOverlayAboveRoads level, and above 0 added to the AboveLabels level
+    
+    NSUInteger overlayIndex = 0;
+    CGFloat zIndex = 0; // if the overlay doesnt provide the zIndex interface, assume the index is -1
+    MKOverlayLevel level = MKOverlayLevelAboveLabels;
+    if ([overlay conformsToProtocol:@protocol(AIRZIndexed)]) {
+        zIndex = [(id <AIRZIndexed>)overlay getZIndex];
+    }
+    if (zIndex <= 0) {
+        level = MKOverlayLevelAboveRoads;
+    }
+    
+    // increment the overlayIndex until the existing overlay is no longer larger than the desired zIndex.
+    for (id curOverlay in [self overlaysInLevel:level]) {
+        CGFloat curOverlayZIndex = NAN;
+        if ([curOverlay conformsToProtocol:@protocol(AIRZIndexed)]) {
+            curOverlayZIndex = [(id <AIRZIndexed>)curOverlay getZIndex];
+        }
+        if (isnan(curOverlayZIndex) || (zIndex > curOverlayZIndex)) {
+            overlayIndex++;
+        } else if (!isnan(curOverlayZIndex) && (curOverlayZIndex >= zIndex)) {
+            break;
+        }
+    }
+    
+    
+    [self insertOverlay:overlay atIndex:overlayIndex level:level];
+}
+
 
 #pragma mark Overrides for Callout behavior
 
