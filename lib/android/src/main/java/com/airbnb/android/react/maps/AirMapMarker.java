@@ -335,7 +335,11 @@ public class AirMapMarker extends AirMapFeature {
     public void update(int width, int height) {
         this.width = width;
         this.height = height;
-        update();
+        try {
+            update();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private Bitmap createDrawable() {
