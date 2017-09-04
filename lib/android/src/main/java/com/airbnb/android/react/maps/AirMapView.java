@@ -712,7 +712,7 @@ public class AirMapView extends MapView implements GoogleMap.InfoWindowAdapter,
         @Override
         public void run() {
 
-            Projection projection = map.getProjection();
+            Projection projection = map != null ? map.getProjection() : null;
             VisibleRegion region = (projection != null) ? projection.getVisibleRegion() : null;
             LatLngBounds bounds = (region != null) ? region.latLngBounds : null;
 
