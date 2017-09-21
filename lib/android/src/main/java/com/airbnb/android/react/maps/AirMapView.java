@@ -302,8 +302,12 @@ public class AirMapView extends MapView implements GoogleMap.InfoWindowAdapter,
             map.setMyLocationEnabled(showUserLocation);
           }
           synchronized (AirMapView.this) {
-            AirMapView.this.onResume();
-            paused = false;
+              try{
+                  AirMapView.this.onResume();
+                  paused = false;
+              }catch (Exception e){
+                  e.printStackTrace();
+              }
           }
         }
 
