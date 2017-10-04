@@ -76,7 +76,7 @@ public class AirMapPolyline extends AirMapFeature {
 
     private PolylineOptions createPolylineOptions() {
         PolylineOptions options = new PolylineOptions();
-        options.addAll(coordinates);
+        options.addAll(coordinates == null ? new ArrayList<LatLng>() : coordinates);
         options.color(color);
         options.width(width);
         options.geodesic(geodesic);
