@@ -28,8 +28,9 @@ public class AirMapPolyline extends AirMapFeature {
     }
 
     public void setCoordinates(ReadableArray coordinates) {
-        this.coordinates = new ArrayList<>((coordinates!=null)?coordinates.size():0);
-        for (int i = 0; i < coordinates.size(); i++) {
+        int size = (coordinates!=null) ? coordinates.size() : 0;
+        this.coordinates = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
             ReadableMap coordinate = coordinates.getMap(i);
             this.coordinates.add(i,
                     new LatLng(coordinate.getDouble("latitude"), coordinate.getDouble("longitude")));

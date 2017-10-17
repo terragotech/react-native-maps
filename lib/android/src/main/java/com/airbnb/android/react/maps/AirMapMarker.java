@@ -286,7 +286,12 @@ public class AirMapMarker extends AirMapFeature {
                 canvas.drawBitmap(viewBitmap, 0, 0, null);
                 return BitmapDescriptorFactory.fromBitmap(combinedBitmap);
             } else {
-                return BitmapDescriptorFactory.fromBitmap(createDrawable());
+                try{
+                    return BitmapDescriptorFactory.fromBitmap(createDrawable());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return BitmapDescriptorFactory.defaultMarker(this.markerHue);
+                }
             }
         } else if (iconBitmapDescriptor != null) {
             // use local image as a marker
