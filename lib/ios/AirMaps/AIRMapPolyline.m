@@ -134,11 +134,12 @@
     CGContextBeginPath(context);
     
     // Get coordinates
-    CLLocationCoordinate2D coordinates[[self.polyline pointCount]];
-    [self.polyline getCoordinates:coordinates range:NSMakeRange(0, [self.polyline pointCount])];
+    NSUInteger pointCountValue = [self.polyline pointCount];
+    CLLocationCoordinate2D coordinates[pointCountValue];
+    [self.polyline getCoordinates:coordinates range:NSMakeRange(0, pointCountValue)];
     
     // Draw line segments
-    for(int i = 0; i < [self.polyline pointCount]; i++) {
+    for(int i = 0; i < pointCountValue; i++) {
         CGPoint point = [snapshot pointForCoordinate:coordinates[i]];
         if (i == 0) {
             CGContextMoveToPoint(context,point.x, point.y);
